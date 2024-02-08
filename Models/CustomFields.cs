@@ -5,16 +5,16 @@ namespace LoggerApi.Models
 {
     public class CustomFields
     {
-        public CustomFields(string appName)
+        public CustomFields(string appName, string environment)
         {
             AppName = appName;
+            Environment = environment;
         }
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        [BsonElement("Name")]
         public string AppName { get; set; }
 
         public string Environment { get; set; }

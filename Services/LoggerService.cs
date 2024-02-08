@@ -37,7 +37,8 @@ namespace LoggerApi.Services
             }
             catch (Exception ex)
             {
-                await CreateLogAsync(new Log("ULogger", environment, LogLevel.Error, ex.Message, null));
+                var log = new Log("ULogger", environment, LogLevel.Error, ex.Message);
+                await _logsCollection.InsertOneAsync(log);
                 return null;
             }
         }
@@ -52,6 +53,5 @@ namespace LoggerApi.Services
         public async Task UpdateCustomFieldsAsync(string id, CustomFields customFields) => await _customFieldsCollection.ReplaceOneAsync(id, customFields);
 
         public async Task DeleteCustomFieldsAsync(string id) => await _customFieldsCollection.DeleteOneAsync(x => x.Id == id);
-
     }
 }

@@ -5,15 +5,13 @@ namespace LoggerApi.Models
 {
     public class Log
     {
-        public Log(string appName, string environment, LogLevel logLevel, string message, List<object>? customFields)
+        public Log(string appName, string environment, LogLevel logLevel, string message)
         {
-            Id = null;
             AppName = appName;
             Environment = environment;
             LogLevel = logLevel;
             Message = message;
             CreatedWhen = DateTime.UtcNow;
-            CustomFields = customFields;
         }
 
         [BsonId]
