@@ -1,5 +1,7 @@
 ﻿using LoggerApi.Models;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 
 namespace LoggerApi.Services
@@ -20,7 +22,30 @@ namespace LoggerApi.Services
             _logsCollection = mongoDatabase.GetCollection<Log>(uLoggerDatabaseSettings.Value.LogsCollectionName);
         }
 
-        public async Task<CustomFields> GetCustomFieldsAsync(string id) => await _customFieldsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        public async Task<CustomFields> GetCustomFieldsAsync(string id)
+        {
+            var customFields = await _customFieldsCollection.Find(id).FirstOrDefaultAsync();
+
+            var customFieldsDocument = customFields.ToBsonDocument();
+
+            if (customFieldsDocument != null)
+            {               
+                foreach (var element in customFieldsDocument.Elements)
+                {
+                    if (element.Name.ToLower() != "appname" && element.Name.ToLower() != "environment")
+                    {
+                        if (customFields.Fields == null) 
+                        { 
+                            customFields.Fields = new Dictionary<string, object>(); 
+                        }
+                        customFields.Fields.Add(element.Name, element.Value);
+                    }
+                }
+
+                return customFields;
+            }
+            return null;
+        }
 
         public async Task<string?> GetCustomFieldsIdByAppName(string appName, string environment)
         {

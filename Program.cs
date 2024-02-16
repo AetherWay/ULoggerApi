@@ -1,8 +1,14 @@
+using LoggerApi.Models;
+using LoggerApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.Configure<ULoggerDatabaseSettings>(
+    builder.Configuration.GetSection("ULoggerDatabase"));
+builder.Services.AddSingleton<ILoggerService, LoggerService>();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

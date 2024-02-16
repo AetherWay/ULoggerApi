@@ -19,6 +19,6 @@ namespace LoggerApi.Models
 
         public string Environment { get; set; }
 
-        public List<object>? Fields { get; }
+        public Dictionary<string, object>? Fields { get; set; }
     }
 }

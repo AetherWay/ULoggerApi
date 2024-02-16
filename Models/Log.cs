@@ -9,7 +9,7 @@ namespace LoggerApi.Models
         {
             AppName = appName;
             Environment = environment;
-            LogLevel = logLevel;
+            LogLevel = ((short)logLevel);
             Message = message;
             CreatedWhen = DateTime.UtcNow;
         }
@@ -22,12 +22,12 @@ namespace LoggerApi.Models
 
         public string Environment { get; set; }
 
-        public LogLevel LogLevel { get; set; }
+        public int LogLevel { get; set; }
 
         public string Message { get; set; }
 
         public DateTime? CreatedWhen { get; }
 
-        public List<object>? CustomFields { get; set; }
+        public Dictionary<string, object>? CustomFields { get; set; }
     }
 }
