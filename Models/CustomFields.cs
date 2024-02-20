@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Text.Json.Serialization;
 
 namespace LoggerApi.Models
 {
@@ -11,6 +12,7 @@ namespace LoggerApi.Models
             Environment = environment;
         }
 
+        [JsonIgnore]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
@@ -19,6 +21,6 @@ namespace LoggerApi.Models
 
         public string Environment { get; set; }
 
-        public Dictionary<string, object>? Fields { get; set; }
+        public Dictionary<string, string>? Fields { get; set; }
     }
 }

@@ -36,9 +36,9 @@ namespace LoggerApi.Services
                     {
                         if (customFields.Fields == null) 
                         { 
-                            customFields.Fields = new Dictionary<string, object>(); 
+                            customFields.Fields = new Dictionary<string, string>(); 
                         }
-                        customFields.Fields.Add(element.Name, element.Value);
+                        customFields.Fields.Add(element.Name, element.Value?.ToString());
                     }
                 }
 

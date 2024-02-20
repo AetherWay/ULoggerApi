@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Text.Json.Serialization;
+using System.Text.Json.Nodes;
 
 namespace LoggerApi.Models
 {
@@ -14,6 +16,7 @@ namespace LoggerApi.Models
             CreatedWhen = DateTime.UtcNow;
         }
 
+        [JsonIgnore]
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; }
@@ -28,6 +31,6 @@ namespace LoggerApi.Models
 
         public DateTime? CreatedWhen { get; }
 
-        public Dictionary<string, object>? CustomFields { get; set; }
+        public Dictionary<string, JsonObject>? CustomFields { get; set; }
     }
 }
